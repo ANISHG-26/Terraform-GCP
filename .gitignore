@@ -1,1 +1,6 @@
 service-account-key/*
+.terraform/providers/registry.terraform.io/hashicorp/google/5.31.1/windows_amd64/terraform-provider-google_v5.31.1_x5.exe
+terraform.tfstate.backup
+terraform.tfstate
+.terraform.lock.hcl
+.terraform/providers/registry.terraform.io/hashicorp/google/5.31.1/windows_amd64/LICENSE.txt
