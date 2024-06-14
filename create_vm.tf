@@ -1,19 +1,19 @@
 provider "google" {
-  project     = "terraform-classroom"
-  credentials = file("service-account-key/creds.json")
-  region      = "us-central1"
-  zone        = "us-central1-c"
+  project     = var.project
+  credentials = file(var.credentials_files)
+  region      = var.region
+  zone        = var.zone
 }
 
 resource "google_compute_instance" "terraform_created_vm" {
-  name                      = "terraform-vm"
-  machine_type              = "f1-micro"
-  zone                      = "us-central1-a"
-  allow_stopping_for_update = true
+  name                      = var.vm_params.name
+  machine_type              = var.vm_params.machine_type
+  zone                      = var.vm_params.zone
+  allow_stopping_for_update = var.vm_params.allow_stopping_for_update
 
   boot_disk {
     initialize_params {
-      image = "ubuntu-os-cloud/ubuntu-2204-lts"
+      image = var.os_image
     }
   }
 
@@ -34,6 +34,6 @@ resource "google_compute_network" "terraform_created_network" {
 resource "google_compute_subnetwork" "terraform_created_subnet" {
   name          = "terraform-subnet"
   ip_cidr_range = "10.20.0.0/16"
-  region        = "us-central1"
+  region        = var.region
   network       = google_compute_network.terraform_created_network.id
 }

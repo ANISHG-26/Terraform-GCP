@@ -1,0 +1,83 @@
+variable "my_string" {
+  type        = string
+  description = "This variable contains string values"
+  default     = "Hello!"
+}
+
+variable "my_string" {
+  type        = number
+  description = "This variable contains numbers"
+  default     = 12.5
+}
+
+variable "my_any" {
+  type        = any
+  description = "This variable contains any type"
+  default     = true # or "This" or 1973
+}
+
+variable "my_null" {
+  type        = null
+  description = "This variable can be dismissed"
+}
+
+
+variable "my_list" {
+  type        = list(any)
+  description = "This is a list of values"
+  default     = ["A", 42, true]
+}
+
+variable "my_tuple" {
+  type        = tuple([string, number, bool])
+  description = "This is a correct tuple"
+  default     = ["hello", 42, true]
+}
+
+variable "my_set" {
+  type        = set(number)
+  description = "This is a set of unique numbers"
+  default     = [42, 4, 2] # == [2, 42, 4] == [42, 42, 4, 2, 2]
+}
+
+variable "my_map" {
+  type        = map(string)
+  description = "GCP provider params"
+  default = {
+    project     = "myprojectname"
+    credentials = "cred.json"
+    region      = "us-central1"
+  }
+}
+
+variable "my_simple_object" {
+  type = object({
+    name                      = string
+    machine_type              = string
+    zone                      = string
+    allow_stopping_for_update = bool
+    disk = object({
+      source_image = string
+      auto_delete  = bool
+      boot         = bool
+    })
+  })
+
+  default = {
+    name                      = "appserver"
+    machine_type              = "f1-micro"
+    zone                      = "us-central1-a"
+    allow_stopping_for_update = true
+    disk = {
+      source_image = "ubuntu-os-cloud/ubuntu-2204-lts"
+      auto_delete  = true
+      boot         = true
+    }
+  }
+  validation {
+    condition     = false
+    error_message = "It has failed."
+  }
+}
+
+
